@@ -1,0 +1,164 @@
+.manifest-viewer-page {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--header-height));
+    padding: var(--space-6);
+    gap: var(--space-4);
+}
+
+/* ─── Toolbar ─── */
+
+.manifest-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.manifest-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.manifest-toolbar-left h2 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+}
+
+.manifest-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.manifest-version-badge {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--primary-transparent);
+    color: var(--primary-light);
+    border: 1px solid var(--primary-border);
+}
+
+.manifest-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.manifest-status-badge.valid {
+    background: var(--success-hover);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.manifest-status-badge.invalid {
+    background: var(--danger-hover);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+/* ─── Errors panel ─── */
+
+.manifest-errors {
+    background: var(--surface-1);
+    border: 1px solid var(--danger);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.manifest-errors-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--space-2) var(--space-4);
+    background: var(--danger-hover);
+    border: none;
+    color: var(--danger);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.manifest-errors-toggle:hover {
+    background: rgba(255, 68, 68, 0.15);
+}
+
+.manifest-errors-list {
+    padding: var(--space-2) var(--space-4);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.manifest-error-item {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: var(--font-size-sm);
+}
+
+.manifest-error-item:last-child {
+    border-bottom: none;
+}
+
+.manifest-error-path {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--warning);
+    white-space: nowrap;
+    min-width: 120px;
+}
+
+.manifest-error-msg {
+    color: var(--text-secondary);
+}
+
+/* ─── Editor container ─── */
+
+.manifest-editor-container {
+    flex: 1;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+
+/* ─── Toast notification ─── */
+
+.toast-msg {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--surface-elevated, #2a2a3e);
+    border: 1px solid var(--border-primary, #3a3a5c);
+    color: var(--text-primary, #e0e0e0);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    animation: toast-slide-up 0.3s ease-out;
+}
+
+@keyframes toast-slide-up {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(1rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}

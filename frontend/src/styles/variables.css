@@ -1,0 +1,74 @@
+:root {
+    /* Primary Colors — from WebDesigner */
+    --primary: #847bff;
+    --primary-light: #b3adff;
+    --primary-dark: #5c5798;
+    --primary-triadic-1: #ff847b;
+    --primary-triadic-2: #7bff84;
+
+    --primary-transparent: rgba(132, 123, 255, 0.1);
+    --primary-hover: rgba(132, 123, 255, 0.2);
+    --primary-border: rgba(132, 123, 255, 0.5);
+
+    /* Background Colors */
+    --surface-0: #262626;
+    --surface-1: #333333;
+    --surface-2: #404040;
+    --surface-3: #4d4d4d;
+    --surface-4: #595959;
+    --surface-5: #666666;
+    --surface-6: #737373;
+    --background-info: rgba(255, 255, 255, 0.8);
+    --primary-gradient: radial-gradient(ellipse at top left, var(--primary-dark), var(--primary-transparent));
+    --background-gradient: radial-gradient(ellipse at top left, var(--surface-4), var(--surface-2));
+    --content-gradient: radial-gradient(ellipse at top left, var(--surface-3), var(--surface-1));
+
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-disabled: rgba(255, 255, 255, 0.3);
+    --text-disabled-light: rgba(255, 255, 255, 0.5);
+
+    /* Border Colors */
+    --border-light: rgba(255, 255, 255, 0.1);
+    --border-dark: rgba(0, 0, 0, 0.1);
+    --border-input: rgba(255, 255, 255, 0.23);
+    --border-hover: rgba(255, 255, 255, 0.3);
+
+    /* Action Colors */
+    --action-hover: rgba(255, 255, 255, 0.1);
+    --danger: #ff4444;
+    --danger-hover: rgba(255, 68, 68, 0.1);
+    --warning: #ffa726;
+    --warning-hover: rgba(255, 167, 38, 0.1);
+    --success: #66bb6a;
+    --success-hover: rgba(102, 187, 106, 0.1);
+
+    /* Variant Colors */
+    --variant-textColor: var(--primary);
+    --alias-textColor: #b3adff;
+
+    /* Shadow */
+    --shadow-panel: 0 0px 16px rgba(0, 0, 0, 0.25);
+    --shadow-menu: 0 8px 16px rgba(0, 0, 0, 0.25);
+
+    /* Sizing */
+    --font-size-xs: 10px;
+    --font-size-sm: 12px;
+    --font-size: 14px;
+    --font-size-lg: 18px;
+    --font-size-xl: 24px;
+    --font-size-xxl: 32px;
+    --font-size-xxxl: 40px;
+    --space: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --border-radius: 4px;
+    --header-height: 56px;
+
+    /* Misc */
+    --transition: 0.2s;
+}

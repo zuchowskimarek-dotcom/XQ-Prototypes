@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
+
+* {
+    font-family: "Figtree", system-ui, sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: var(--font-size);
+    box-sizing: border-box;
+    scrollbar-color: var(--surface-4) var(--surface-0);
+    scrollbar-width: thin;
+}
+
+body {
+    background-color: var(--surface-1);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: var(--alias-textColor);
+    text-decoration: none;
+}
+
+h1 {
+    font-size: var(--font-size-xxl);
+    margin: 0;
+    font-weight: bold;
+    color: var(--text-primary);
+    padding: 0 0 var(--space-2);
+    margin-bottom: var(--space-4);
+    border-bottom: 2px solid var(--primary-transparent);
+}
+
+h2 {
+    font-size: var(--font-size-xl);
+    margin: 0;
+    color: var(--text-primary);
+}
+
+h3 {
+    font-size: var(--font-size-lg);
+    margin: 0;
+    color: var(--text-primary);
+}
+
+button {
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+button:not(:disabled):hover {
+    color: var(--text-primary);
+    background: var(--surface-1);
+}
+
+button:disabled {
+    color: var(--text-disabled);
+    cursor: not-allowed;
+}
+
+/* Card component — matching WebDesigner */
+.card {
+    border-radius: var(--border-radius);
+    background: radial-gradient(ellipse at top left, var(--surface-3), var(--surface-2));
+    padding: var(--space-4);
+    box-shadow: var(--shadow-panel);
+}
+
+.card h2,
+.card h3 {
+    margin: calc(0px - var(--space-4)) calc(0px - var(--space-4)) var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    border-bottom: 2px solid var(--primary-dark);
+    background: radial-gradient(ellipse at bottom left, var(--primary-dark), var(--surface-2)) !important;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+
+/* Panel component */
+.panel-header {
+    padding: 0 var(--space);
+    gap: var(--space);
+    height: var(--space-6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: var(--font-size-sm);
+}
+
+.panel-inner {
+    width: 100%;
+    background: var(--surface-2);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--surface-4);
+    padding: var(--space);
+    flex-grow: 1;
+}
+
+/* Form fields */
+.form-field {
+    margin-bottom: 16px;
+}
+
+.form-field .MuiOutlinedInput-root {
+    background-color: var(--surface-2);
+}
+
+.form-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: var(--primary-border);
+}
+
+.form-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: var(--primary);
+}
+
+.form-field .MuiInputLabel-root {
+    color: var(--text-secondary);
+}
+
+.form-field .MuiInputLabel-root.Mui-focused {
+    color: var(--primary);
+}
+
+.form-field .MuiOutlinedInput-input {
+    color: var(--text-primary);
+}
+
+/* MUI overrides for dark theme */
+.MuiPaper-root {
+    background-color: var(--surface-2) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}

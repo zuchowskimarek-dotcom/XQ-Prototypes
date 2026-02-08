@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Level 1: Decision Domain (governance + versioning boundary) ───
+
+model DecisionDomain {
+  id          String          @id @default(uuid())
+  name        String          @unique
+  description String?
+  version     String          @default("1.0.0")
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  scopes      DecisionScope[]
+}
+
+// ─── Level 2: Decision Scope (semantic decision name — no config) ───
+
+model DecisionScope {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  domainId    String
+  domain      DecisionDomain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+  rules       PolicyRule[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@unique([domainId, name])
+}
+
+// ─── Level 3: PolicyRule (§8.7 — the contextual rule unit) ───
+
+model PolicyRule {
+  id               String               @id @default(uuid())
+  contextFilter    Json                 @default("{}")
+  specificityScore Int                  @default(0)
+  scopeId          String
+  scope            DecisionScope        @relation(fields: [scopeId], references: [id], onDelete: Cascade)
+  policies         PolicyDefinition[]
+  strategy         StrategyDefinition?
+  systemParameters SystemParameter[]
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+}
+
+// ─── PolicyDefinition (§8.8 — constraints and permissions) ───
+
+model PolicyDefinition {
+  id          String            @id @default(uuid())
+  name        String
+  description String?
+  parameters  Json              @default("{}") // Map<string, SystemParameter> per §8.8
+  ruleId      String
+  rule        PolicyRule        @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+}
+
+// ─── StrategyDefinition (§8.9 — decision logic selection) ───
+// §8.7: exactly one strategy per rule → optional relation, enforced in app layer
+
+model StrategyDefinition {
+  id          String     @id @default(uuid())
+  name        String
+  description String?
+  parameters  Json       @default("{}") // Map<string, SystemParameter> per §8.9
+  ruleId      String     @unique // exactly one strategy per rule
+  rule        PolicyRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+}
+
+// ─── SystemParameter (§8.10 — rule-level static config values) ───
+
+model SystemParameter {
+  id          String     @id @default(uuid())
+  paramId     String
+  type        String
+  description String?
+  value       String?
+  ruleId      String
+  rule        PolicyRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+}

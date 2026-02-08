@@ -1,0 +1,155 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "PolicyManifestV2",
+    "type": "object",
+    "required": [
+        "id",
+        "decisionDomain",
+        "version",
+        "contentsByScope"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "decisionDomain": {
+            "type": "string"
+        },
+        "version": {
+            "type": "string"
+        },
+        "contentsByScope": {
+            "type": "object",
+            "description": "Map of decision scope name -> list of contextual decision rules (PolicyRule).",
+            "additionalProperties": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "$ref": "#/$defs/PolicyRule"
+                }
+            }
+        }
+    },
+    "additionalProperties": false,
+    "$defs": {
+        "PolicyRule": {
+            "type": "object",
+            "required": [
+                "contextFilter",
+                "strategy"
+            ],
+            "properties": {
+                "contextFilter": {
+                    "$ref": "#/$defs/ContextFilter"
+                },
+                "strategy": {
+                    "$ref": "#/$defs/StrategyDefinition"
+                },
+                "policies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/PolicyDefinition"
+                    }
+                },
+                "systemParameters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/SystemParameter"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "StrategyDefinition": {
+            "type": "object",
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9._:-]+$"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "parameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/$defs/SystemParameter"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "PolicyDefinition": {
+            "type": "object",
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9._:-]+$"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "parameters": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/$defs/SystemParameter"
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "SystemParameter": {
+            "type": "object",
+            "required": [
+                "id",
+                "type"
+            ],
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": [
+                        "bool",
+                        "int",
+                        "decimal",
+                        "string",
+                        "enum"
+                    ]
+                },
+                "description": {
+                    "type": "string"
+                },
+                "value": {}
+            },
+            "additionalProperties": false
+        },
+        "ContextFilter": {
+            "type": "object",
+            "description": "Declarative applicability filter matched by WMS against runtime context.",
+            "additionalProperties": {
+                "type": [
+                    "string",
+                    "number",
+                    "boolean"
+                ]
+            }
+        }
+    }
+}

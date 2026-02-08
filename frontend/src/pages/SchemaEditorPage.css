@@ -1,0 +1,184 @@
+.schema-editor-page {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - var(--header-height));
+    padding: var(--space-6);
+    gap: var(--space-4);
+}
+
+/* ─── Toolbar ─── */
+
+.schema-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.schema-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.schema-toolbar-left h2 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+}
+
+.schema-badge {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.schema-badge.factory {
+    background: var(--success-hover);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.schema-badge.custom {
+    background: var(--warning-hover);
+    color: var(--warning);
+    border: 1px solid var(--warning);
+}
+
+.schema-dirty-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--warning);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.schema-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* ─── Buttons ─── */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--primary-light);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border-input);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: var(--action-hover);
+    color: var(--text-primary);
+}
+
+.btn-warning {
+    background: transparent;
+    color: var(--warning);
+    border-color: var(--warning);
+}
+
+.btn-warning:hover:not(:disabled) {
+    background: var(--warning-hover);
+}
+
+.btn-danger {
+    background: var(--danger, #e53935);
+    color: #fff;
+    border-color: var(--danger, #e53935);
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: var(--danger-light, #ef5350);
+}
+
+.save-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ─── Status message ─── */
+
+.schema-message {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.schema-message.success {
+    background: var(--success-hover);
+    color: var(--success);
+    border: 1px solid var(--success);
+}
+
+.schema-message.error {
+    background: var(--danger-hover);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+}
+
+.schema-message.info {
+    background: var(--primary-transparent);
+    color: var(--primary-light);
+    border: 1px solid var(--primary-border);
+}
+
+/* ─── Editor container ─── */
+
+.schema-editor-container {
+    flex: 1;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+}
+
+/* ─── Animations ─── */
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
