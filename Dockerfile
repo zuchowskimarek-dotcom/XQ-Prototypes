@@ -16,8 +16,8 @@ RUN cd backend && npm ci
 
 COPY backend/ ./backend/
 
-# Generate Prisma client
-RUN cd backend && npx prisma generate
+# Generate Prisma client (dummy URL — generate doesn't connect, just needs config to parse)
+RUN cd backend && DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy" npx prisma generate
 
 # Copy frontend build output
 COPY --from=frontend-build /app/frontend/dist ./frontend/dist
@@ -25,5 +25,5 @@ COPY --from=frontend-build /app/frontend/dist ./frontend/dist
 # Railway sets PORT env var automatically
 EXPOSE ${PORT:-3005}
 
-# Start: push schema + run server
-CMD cd backend && npx prisma db push || echo "prisma db push failed, continuing..." && npm start
+# Start: push schema (creates tables) then run server
+CMD sh -c "cd backend && npx prisma db push && npm start"
