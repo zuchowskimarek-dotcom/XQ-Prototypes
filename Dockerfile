@@ -26,4 +26,4 @@ COPY --from=frontend-build /app/frontend/dist ./frontend/dist
 EXPOSE ${PORT:-3005}
 
 # Start: push schema + run server
-CMD cd backend && npx prisma db push && npm start
+CMD cd backend && npx prisma db push || echo "prisma db push failed, continuing..." && npm start
