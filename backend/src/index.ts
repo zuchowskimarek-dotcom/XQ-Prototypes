@@ -30,7 +30,7 @@ app.use('/api/schema', schemaRoutes);
 // ─── Production: serve frontend static build ───
 const clientDist = path.join(__dirname, '../../frontend/dist');
 app.use(express.static(clientDist));
-app.get('*', (_req, res) => {
+app.get('{*path}', (_req, res) => {
     res.sendFile(path.join(clientDist, 'index.html'));
 });
 
