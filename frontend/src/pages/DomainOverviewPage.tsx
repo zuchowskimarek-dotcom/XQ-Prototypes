@@ -6,7 +6,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
+import CodeIcon from '@mui/icons-material/Code';
 import { useDomainDetail } from '../hooks/useDomainDetail';
+import { saveZipAs } from '../utils/saveZipAs';
 import './DomainOverviewPage.css';
 
 export function DomainOverviewPage() {
@@ -56,6 +58,12 @@ export function DomainOverviewPage() {
                 <div className="page-header-btns">
                     <button className="btn-secondary" onClick={() => navigate(`/domains/${domainId}/manifest`)}>
                         <FileDownloadIcon fontSize="small" /> Export Manifest
+                    </button>
+                    <button className="btn-secondary" onClick={() => {
+                        const ns = domain.name.replace(/[^a-zA-Z0-9]+/g, '');
+                        saveZipAs(`/api/export/csharp/${domainId}`, `LogisQ.Contracts.${ns}.zip`).catch((e) => alert(e.message));
+                    }}>
+                        <CodeIcon fontSize="small" /> Export C#
                     </button>
                     <button className="btn-primary" onClick={() => setShowNewForm(true)}>
                         <AddIcon fontSize="small" /> New Scope

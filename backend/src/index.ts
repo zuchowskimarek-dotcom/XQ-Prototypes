@@ -7,6 +7,7 @@ import scopeRoutes from './routes/scopes';
 import ruleRoutes from './routes/rules';
 import manifestRoutes from './routes/manifest';
 import schemaRoutes from './routes/schema';
+import exportRoutes from './routes/export';
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '3005', 10);
@@ -26,6 +27,7 @@ app.use('/api/domains', manifestRoutes);     // /api/domains/:id/manifest
 app.use('/api/scopes', scopeRoutes);
 app.use('/api/rules', ruleRoutes);
 app.use('/api/schema', schemaRoutes);
+app.use('/api/export/csharp', exportRoutes);
 
 // ─── Production: serve frontend static build ───
 const clientDist = path.join(__dirname, '../../frontend/dist');

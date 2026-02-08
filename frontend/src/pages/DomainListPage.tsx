@@ -6,8 +6,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
 import DownloadIcon from '@mui/icons-material/Download';
+import CodeIcon from '@mui/icons-material/Code';
 import { useDecisionDomains } from '../hooks/useDecisionDomains';
 import { DomainFormModal } from '../components/DomainFormModal';
+import { saveZipAs } from '../utils/saveZipAs';
 import type { DecisionDomain } from '../contracts/types';
 import './DomainListPage.css';
 
@@ -32,6 +34,11 @@ export function DomainListPage() {
                 <div className="page-header-btns">
                     <button className="btn-export" onClick={() => navigate('/manifests/all')} disabled={domains.length === 0}>
                         <DownloadIcon fontSize="small" /> Export All
+                    </button>
+                    <button className="btn-export" onClick={() => {
+                        saveZipAs('/api/export/csharp', 'LogisQ.Contracts.Decisions.zip').catch((e) => alert(e.message));
+                    }} disabled={domains.length === 0}>
+                        <CodeIcon fontSize="small" /> Export All C#
                     </button>
                     <button className="btn-primary" onClick={() => { setEditDomain(null); setModalOpen(true); }}>
                         <AddIcon fontSize="small" /> New Domain
