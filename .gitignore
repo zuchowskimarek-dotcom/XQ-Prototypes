@@ -30,3 +30,7 @@ npm-debug.log*
 
 # TypeScript
 *.tsbuildinfo
+
+# .NET build artifacts
+bin/
+obj/

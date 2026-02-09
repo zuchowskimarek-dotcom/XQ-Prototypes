@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- NuGet Package Metadata -->
+    <PackageId>LogisQ.Contracts.Core</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>LogisQ</Authors>
+    <Company>LogisQ</Company>
+    <Description>Core contract types for LogisQ WES decision framework. Provides base interfaces (IStrategy, IPolicy), result types, and runtime primitives used by generated decision contracts.</Description>
+    <PackageTags>LogisQ;WES;Contracts;Core</PackageTags>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+</Project>
