@@ -239,11 +239,31 @@ export function RuleEditorDrawer({ rule: initialRule, onClose, onRefresh }: Rule
 
     const addParameter = async () => {
         if (!newParamId.trim()) return;
-        await fetch(`/api/rules/${rule.id}/parameters`, {
+        // Frontend type validation
+        if (newParamValue) {
+            if (newParamType === 'int' && !/^-?\d+$/.test(newParamValue)) {
+                alert(`"${newParamValue}" is not a valid integer`);
+                return;
+            }
+            if (newParamType === 'decimal' && isNaN(Number(newParamValue))) {
+                alert(`"${newParamValue}" is not a valid decimal number`);
+                return;
+            }
+            if (newParamType === 'bool' && !['true', 'false'].includes(newParamValue.toLowerCase())) {
+                alert('Boolean values must be "true" or "false"');
+                return;
+            }
+        }
+        const res = await fetch(`/api/rules/${rule.id}/parameters`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ paramId: newParamId.trim(), type: newParamType, value: newParamValue }),
         });
+        if (!res.ok) {
+            const err = await res.json().catch(() => ({ error: 'Failed to create parameter' }));
+            alert(err.details?.[0]?.message || err.error || 'Validation failed');
+            return;
+        }
         setNewParamId(''); setNewParamValue('');
         refetchRule();
     };
@@ -568,7 +588,13 @@ export function RuleEditorDrawer({ rule: initialRule, onClose, onRefresh }: Rule
                                 <option value="bool">bool</option>
                                 <option value="enum">enum</option>
                             </select>
-                            <input type="text" value={newParamValue} onChange={(e) => setNewParamValue(e.target.value)} placeholder="value" />
+                            <input
+                                type={newParamType === 'int' || newParamType === 'decimal' ? 'number' : 'text'}
+                                step={newParamType === 'decimal' ? 'any' : newParamType === 'int' ? '1' : undefined}
+                                value={newParamValue}
+                                onChange={(e) => setNewParamValue(e.target.value)}
+                                placeholder={newParamType === 'bool' ? 'true / false' : newParamType === 'int' ? '0' : newParamType === 'decimal' ? '0.0' : 'value'}
+                            />
                             <button className="btn-icon-sm" onClick={addParameter} disabled={!newParamId.trim()}>
                                 <AddIcon fontSize="small" />
                             </button>

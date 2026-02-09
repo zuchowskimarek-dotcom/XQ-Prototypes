@@ -84,18 +84,55 @@ export const SetStrategySchema = z.object({
 
 // ─── SystemParameter schemas ───
 
+/** Validates that `value` is consistent with the declared `type`. */
+function validateValueForType(data: { type?: string; value?: string | null }, ctx: z.RefinementCtx) {
+    const { type, value } = data;
+    if (value == null || value === '' || !type) return; // nothing to validate
+
+    switch (type) {
+        case 'int':
+            if (!/^-?\d+$/.test(value)) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['value'],
+                    message: `Value "${value}" is not a valid integer`,
+                });
+            }
+            break;
+        case 'decimal':
+            if (isNaN(Number(value))) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['value'],
+                    message: `Value "${value}" is not a valid decimal number`,
+                });
+            }
+            break;
+        case 'bool':
+            if (!['true', 'false'].includes(value.toLowerCase())) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    path: ['value'],
+                    message: `Value "${value}" is not a valid boolean (use "true" or "false")`,
+                });
+            }
+            break;
+        // 'string' and 'enum' accept any string value
+    }
+}
+
 export const CreateParameterSchema = z.object({
     paramId: z.string().min(1, 'paramId is required'),
     type: ParamTypeEnum,
     description: z.string().optional(),
     value: z.string().optional(),
-});
+}).superRefine(validateValueForType);
 
 export const UpdateParameterSchema = z.object({
     value: z.string().optional(),
     type: ParamTypeEnum.optional(),
     description: z.string().optional(),
-});
+}).superRefine(validateValueForType);
 
 // ─── Validation middleware ───
 
