@@ -40,12 +40,13 @@ export const UpdateDomainSchema = z.object({
 
 export const CreateScopeSchema = z.object({
     name: z.string().min(1, 'Scope name is required'),
-    description: z.string().optional(),
+    description: z.string().nullable().optional(),
+    domainId: z.string().uuid('domainId must be a valid UUID'),
 });
 
 export const UpdateScopeSchema = z.object({
     name: z.string().min(1).optional(),
-    description: z.string().optional(),
+    description: z.string().nullable().optional(),
 });
 
 // ─── Rule schemas ───
