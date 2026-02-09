@@ -490,6 +490,10 @@ function generateCsproj(domains: DecisionDomainData[]): string {
         `    <None Include="README.md" Pack="true" PackagePath="\\" />`,
         `  </ItemGroup>`,
         ``,
+        `  <ItemGroup>`,
+        `    <ProjectReference Include="../LogisQ.Contracts.Core/LogisQ.Contracts.Core.csproj" />`,
+        `  </ItemGroup>`,
+        ``,
         `</Project>`,
         ``,
     ].join('\n');
