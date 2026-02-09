@@ -217,6 +217,8 @@ function generateDomainFacade(domain: DecisionDomainData, ns: string): string {
         `// Auto-generated from XyronQ metadata — DO NOT EDIT`,
         `// Domain: ${domain.name} v${domain.version}`,
         ``,
+        `using LogisQ.Contracts;`,
+        ``,
         `namespace ${ns};`,
         ``,
         `/// <summary>`,
@@ -255,6 +257,8 @@ function generateFilterShapes(
     return [
         `// Auto-generated from XyronQ metadata — DO NOT EDIT`,
         ``,
+        `using LogisQ.Contracts;`,
+        ``,
         `namespace ${ns};`,
         ``,
         `/// <summary>`,
@@ -277,6 +281,8 @@ function generateStrategyInterface(strategy: StrategyDefinitionData, ns: string)
 
     return [
         `// Auto-generated from XyronQ metadata — DO NOT EDIT`,
+        ``,
+        `using LogisQ.Contracts;`,
         ``,
         `namespace ${ns};`,
         ``,
@@ -307,6 +313,8 @@ function generatePolicyInterface(policy: PolicyDefinitionData, ns: string): stri
     return [
         `// Auto-generated from XyronQ metadata — DO NOT EDIT`,
         ``,
+        `using LogisQ.Contracts;`,
+        ``,
         `namespace ${ns};`,
         ``,
         `/// <summary>`,
@@ -336,14 +344,19 @@ function generateParameterRecord(
     const properties = Object.entries(params).map(([key, param]) => {
         const csharpType = toCSharpType(param.type);
         const propName = safeCSharpId(key);
+        // Reference types (string) need 'required' to satisfy nullable analysis
+        const needsRequired = csharpType === 'string' || csharpType.endsWith('[]');
+        const modifier = needsRequired ? 'required ' : '';
         return [
             `    /// <summary>${key} (${param.type})</summary>`,
-            `    public ${csharpType} ${propName} { get; init; }`,
+            `    public ${modifier}${csharpType} ${propName} { get; init; }`,
         ].join('\n');
     });
 
     return [
         `// Auto-generated from XyronQ metadata — DO NOT EDIT`,
+        ``,
+        `using LogisQ.Contracts;`,
         ``,
         `namespace ${ns};`,
         ``,
@@ -384,6 +397,8 @@ function generateParameterSchema(
     return [
         `// Auto-generated from XyronQ metadata — DO NOT EDIT`,
         ``,
+        `using LogisQ.Contracts;`,
+        ``,
         `namespace ${ns};`,
         ``,
         `/// <summary>`,
@@ -407,6 +422,8 @@ function generateMetadata(domain: DecisionDomainData, ns: string): string {
     return [
         `// Auto-generated from XyronQ metadata — DO NOT EDIT`,
         `// Regeneration replaces this file. Do not add handwritten code here.`,
+        ``,
+        `using LogisQ.Contracts;`,
         ``,
         `namespace ${ns};`,
         ``,
