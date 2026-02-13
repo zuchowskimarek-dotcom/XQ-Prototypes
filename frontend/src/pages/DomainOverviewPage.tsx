@@ -22,6 +22,7 @@ export function DomainOverviewPage() {
     const [showNewForm, setShowNewForm] = useState(false);
     const [newName, setNewName] = useState('');
     const [newDesc, setNewDesc] = useState('');
+    const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
     const [showImport, setShowImport] = useState(false);
 
     const handleCreateScope = async () => {
@@ -40,10 +41,26 @@ export function DomainOverviewPage() {
         }
     };
 
-    const handleDeleteScope = async (id: string, name: string) => {
-        if (!confirm(`Delete scope "${name}" and all its rules?`)) return;
-        await fetch(`/api/scopes/${id}`, { method: 'DELETE' });
-        refetch();
+    const handleDeleteScope = async (e: React.MouseEvent, id: string) => {
+        e.stopPropagation();
+        if (confirmDeleteId !== id) {
+            // First click — arm the confirmation
+            setConfirmDeleteId(id);
+            return;
+        }
+        // Second click — perform delete
+        setConfirmDeleteId(null);
+        try {
+            const res = await fetch(`/api/scopes/${id}`, { method: 'DELETE' });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({ error: 'Unknown error' }));
+                alert(`Failed to delete: ${err.error || res.statusText}`);
+                return;
+            }
+            refetch();
+        } catch (e) {
+            alert(`Failed to delete: ${String(e)}`);
+        }
     };
 
     if (loading || !domain) return <div className="page-loading">Loading…</div>;
@@ -85,8 +102,16 @@ export function DomainOverviewPage() {
                         onClick={() => navigate(`/domains/${domainId}/scopes/${s.id}`)}
                     >
                         <div className="card-actions">
-                            <button onClick={(e) => { e.stopPropagation(); handleDeleteScope(s.id, s.name); }} title="Delete">
-                                <DeleteIcon fontSize="small" />
+                            <button
+                                className={confirmDeleteId === s.id ? 'delete-confirm' : ''}
+                                onClick={(e) => handleDeleteScope(e, s.id)}
+                                onBlur={() => setConfirmDeleteId(null)}
+                                title={confirmDeleteId === s.id ? 'Click again to confirm' : 'Delete'}
+                            >
+                                {confirmDeleteId === s.id
+                                    ? <span style={{ fontSize: '0.7rem', fontWeight: 600 }}>Sure?</span>
+                                    : <DeleteIcon fontSize="small" />
+                                }
                             </button>
                         </div>
 
