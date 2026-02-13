@@ -10,8 +10,7 @@
     ],
     "properties": {
         "id": {
-            "type": "string",
-            "format": "uuid"
+            "type": "string"
         },
         "decisionDomain": {
             "type": "string"
