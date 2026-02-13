@@ -40,6 +40,10 @@
                 "strategy"
             ],
             "properties": {
+                "_comment": {
+                    "type": "string",
+                    "description": "Optional documentation annotation — ignored at runtime."
+                },
                 "contextFilter": {
                     "$ref": "#/$defs/ContextFilter"
                 },
