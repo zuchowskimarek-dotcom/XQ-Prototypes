@@ -2,8 +2,8 @@
 
 > **XQ Policy Dashboard** — A visual editor for designing, validating, and exporting WES decision contracts.
 
-**Version:** 1.1.0  
-**Last Updated:** 2026-02-09
+**Version:** 1.2.0  
+**Last Updated:** 2026-02-13
 
 ---
 
@@ -141,7 +141,8 @@ Detailed view of a single domain, showing all its decision scopes.
 **Features:**
 - **Scope Cards** — Each scope shows its name, description, rule count, and health status
 - **Create Scope** — Click **+ New Scope** to add a decision scope (e.g., `Decide.Storage.Location`)
-- **Delete Scope** — Remove a scope and all its rules
+- **Delete Scope** — Two-click inline confirmation: first click shows **"Sure?"** in red, second click deletes. Click elsewhere to cancel.
+- **Import Rules** — Click **Import Rules** to open a full-screen Monaco editor modal. Paste a manifest JSON (or a `{ contentsByScope }` fragment), which is validated against the policy schema before seeding into the database. Supports `_comment` annotations on rules.
 - **Export Manifest** — Export this domain's manifest as validated JSON
 - **Export C#** — Generate C# contracts for this domain only, with native Save As dialog
 - **Back Link** — Navigate back to the domain list
@@ -188,10 +189,10 @@ The detailed editor for a single policy rule. Opened from the Scope Editor when 
 - Each policy has a name, description, and typed parameters
 - Multiple policies can be stacked on a single rule
 
-#### System Parameters
-- Define rule-level static configuration values
+#### Rule Parameters
+- Define rule-level static configuration values (the single value source per rule)
 - Each parameter has: ID, type, description, and value
-- Used for runtime configuration that doesn't change per execution
+- Strategy and policy parameters declare needs by `id` and `type`; values are resolved from the rule's parameters at runtime
 
 #### Inline Editing
 - Strategy names, policy names, and parameter details can be edited inline by clicking on them
@@ -391,6 +392,12 @@ WMS can compare these hashes at startup to detect if its installed contracts dif
 |---|---|---|
 | `GET` | `/api/domains/:id/manifest` | Generate and validate manifest for a domain |
 | `GET` | `/api/manifest/all` | Generate all domain manifests with validation |
+
+### Import
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/domains/:id/import` | Import manifest JSON into a domain (validates against schema, seeds scopes/rules/strategies/policies/parameters) |
 
 ### Schema
 

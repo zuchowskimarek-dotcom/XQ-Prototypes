@@ -58,10 +58,10 @@ XQ-Prototypes/
 │   │   └── seed.ts          # Demo data seeder
 │   └── src/
 │       ├── index.ts         # Express server entry
-│       └── routes/          # API routes (domains, scopes, rules, manifest)
+│       └── routes/          # API routes (domains, scopes, rules, manifest, import)
 ├── frontend/
 │   └── src/
-│       ├── components/      # React components (RuleEditorDrawer, ManifestExport, etc.)
+│       ├── components/      # React components (RuleEditorDrawer, ImportRulesModal, etc.)
 │       ├── contracts/       # TypeScript types (§8-aligned)
 │       └── pages/           # Route pages (DomainList, ScopeDetail)
 ```
