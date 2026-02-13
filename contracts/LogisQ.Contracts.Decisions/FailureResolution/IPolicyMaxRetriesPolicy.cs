@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.FailureResolution;
 public interface IPolicyMaxRetriesPolicy : IPolicy
 {
     /// <summary>Stable policy identifier from XyronQ metadata.</summary>
-    const string PolicyId = "0e94ff20-6e28-4239-97a8-6461c23bea08";
+    const string PolicyId = "f3182a33-8813-4fca-bc28-3e26702eba8b";
 
     Task<PolicyResult> ApplyAsync(
         PolicyContext ctx,

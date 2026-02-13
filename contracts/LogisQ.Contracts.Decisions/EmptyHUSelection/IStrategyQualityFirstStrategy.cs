@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.EmptyHUSelection;
 public interface IStrategyQualityFirstStrategy : IStrategy
 {
     /// <summary>Stable strategy identifier from XyronQ metadata.</summary>
-    const string StrategyId = "9a36fdbf-679a-4541-9c87-4527d49da7fa";
+    const string StrategyId = "e04f921c-bf02-4a58-a230-dfcaff86f77c";
 
     Task<StrategyResult> ExecuteAsync(
         StrategyInput input,

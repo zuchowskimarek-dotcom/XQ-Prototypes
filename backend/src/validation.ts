@@ -14,8 +14,8 @@ const ContextFilterSchema = z.record(
 
 const ParamTypeEnum = z.enum(['bool', 'int', 'decimal', 'string', 'enum']);
 
-// §8.12 SystemParameter shape for inline parameters on policies/strategies
-const SystemParameterValueSchema = z.object({
+// §8.12 RuleParameter shape for inline parameters on policies/strategies
+const RuleParameterValueSchema = z.object({
     id: z.string().min(1, 'Parameter id is required'),
     type: ParamTypeEnum,
     description: z.string().optional(),
@@ -65,13 +65,13 @@ export const UpdateRuleSchema = z.object({
 export const CreatePolicySchema = z.object({
     name: z.string().min(1).regex(NamePattern, 'Policy name must match §8.12 pattern: ^[A-Za-z0-9._:-]+$'),
     description: z.string().optional(),
-    parameters: z.record(z.string(), SystemParameterValueSchema).optional(),
+    parameters: z.record(z.string(), RuleParameterValueSchema).optional(),
 });
 
 export const UpdatePolicySchema = z.object({
     name: z.string().min(1).regex(NamePattern, 'Policy name must match §8.12 pattern: ^[A-Za-z0-9._:-]+$').optional(),
     description: z.string().optional(),
-    parameters: z.record(z.string(), SystemParameterValueSchema).optional(),
+    parameters: z.record(z.string(), RuleParameterValueSchema).optional(),
 });
 
 // ─── StrategyDefinition schemas ───
@@ -79,10 +79,10 @@ export const UpdatePolicySchema = z.object({
 export const SetStrategySchema = z.object({
     name: z.string().min(1).regex(NamePattern, 'Strategy name must match §8.12 pattern: ^[A-Za-z0-9._:-]+$'),
     description: z.string().optional(),
-    parameters: z.record(z.string(), SystemParameterValueSchema).optional(),
+    parameters: z.record(z.string(), RuleParameterValueSchema).optional(),
 });
 
-// ─── SystemParameter schemas ───
+// ─── RuleParameter schemas ───
 
 /** Validates that `value` is consistent with the declared `type`. */
 function validateValueForType(data: { type?: string; value?: string | null }, ctx: z.RefinementCtx) {

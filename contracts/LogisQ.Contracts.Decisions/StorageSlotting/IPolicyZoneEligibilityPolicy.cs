@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.StorageSlotting;
 public interface IPolicyZoneEligibilityPolicy : IPolicy
 {
     /// <summary>Stable policy identifier from XyronQ metadata.</summary>
-    const string PolicyId = "0377d36c-32bc-4fd2-b2c9-870f45d41514";
+    const string PolicyId = "79da90f4-648b-4734-8ca6-58bd15b875f8";
 
     Task<PolicyResult> ApplyAsync(
         PolicyContext ctx,

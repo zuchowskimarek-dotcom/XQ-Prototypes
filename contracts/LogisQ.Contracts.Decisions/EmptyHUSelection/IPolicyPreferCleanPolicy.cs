@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.EmptyHUSelection;
 public interface IPolicyPreferCleanPolicy : IPolicy
 {
     /// <summary>Stable policy identifier from XyronQ metadata.</summary>
-    const string PolicyId = "ac383c68-919a-4a9e-9960-a0bd301ca8b7";
+    const string PolicyId = "c2fe09a9-1f8e-44a0-8092-bc72bf364679";
 
     Task<PolicyResult> ApplyAsync(
         PolicyContext ctx,

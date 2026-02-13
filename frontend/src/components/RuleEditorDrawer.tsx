@@ -534,10 +534,10 @@ export function RuleEditorDrawer({ rule: initialRule, onClose, onRefresh }: Rule
                     <section className="editor-section">
                         <div className="section-header">
                             <h4>System Parameters</h4>
-                            <span className="count-badge">{rule.systemParameters.length}</span>
+                            <span className="count-badge">{rule.ruleParameters.length}</span>
                         </div>
 
-                        {rule.systemParameters.map((p) => (
+                        {rule.ruleParameters.map((p) => (
                             <div key={p.id} className="param-row">
                                 {editingParamDbId === p.id ? (
                                     <div className="inline-edit-row param-edit-fields">

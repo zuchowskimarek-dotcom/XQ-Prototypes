@@ -43,7 +43,7 @@ model PolicyRule {
   scope            DecisionScope        @relation(fields: [scopeId], references: [id], onDelete: Cascade)
   policies         PolicyDefinition[]
   strategy         StrategyDefinition?
-  systemParameters SystemParameter[]
+  ruleParameters   RuleParameter[]
   createdAt        DateTime             @default(now())
   updatedAt        DateTime             @updatedAt
 }
@@ -54,7 +54,7 @@ model PolicyDefinition {
   id          String            @id @default(uuid())
   name        String
   description String?
-  parameters  Json              @default("{}") // Map<string, SystemParameter> per §8.8
+  parameters  Json              @default("{}") // Map<string, RuleParameter> per §8.8
   ruleId      String
   rule        PolicyRule        @relation(fields: [ruleId], references: [id], onDelete: Cascade)
 }
@@ -66,14 +66,14 @@ model StrategyDefinition {
   id          String     @id @default(uuid())
   name        String
   description String?
-  parameters  Json       @default("{}") // Map<string, SystemParameter> per §8.9
+  parameters  Json       @default("{}") // Map<string, RuleParameter> per §8.9
   ruleId      String     @unique // exactly one strategy per rule
   rule        PolicyRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
 }
 
-// ─── SystemParameter (§8.10 — rule-level static config values) ───
+// ─── RuleParameter (§8.10 — rule-level static config values) ───
 
-model SystemParameter {
+model RuleParameter {
   id          String     @id @default(uuid())
   paramId     String
   type        String

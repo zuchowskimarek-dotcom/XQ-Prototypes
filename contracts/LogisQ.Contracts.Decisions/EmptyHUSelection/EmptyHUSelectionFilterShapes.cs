@@ -10,11 +10,11 @@ namespace LogisQ.Contracts.Decisions.EmptyHUSelection;
 /// </summary>
 public static class EmptyHUSelectionFilterShapes
 {
+    /// <summary>Shape: shape:default (priority 0)</summary>
+    public static readonly ContextFilterShape Default =
+        new("shape:default", Array.Empty<string>(), PriorityClass: 0);
+
     /// <summary>Shape: shape:huType (priority 1)</summary>
     public static readonly ContextFilterShape HuType =
         new("shape:huType", new[] { "huType" }, PriorityClass: 1);
-
-    /// <summary>Shape: shape:processRef (priority 1)</summary>
-    public static readonly ContextFilterShape ProcessRef =
-        new("shape:processRef", new[] { "processRef" }, PriorityClass: 1);
 }

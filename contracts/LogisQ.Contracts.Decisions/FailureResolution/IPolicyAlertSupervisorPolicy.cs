@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.FailureResolution;
 public interface IPolicyAlertSupervisorPolicy : IPolicy
 {
     /// <summary>Stable policy identifier from XyronQ metadata.</summary>
-    const string PolicyId = "23417b59-b312-4793-ab92-0994ac6ae1b4";
+    const string PolicyId = "238191e3-404b-45df-ae83-f4627ec22d3b";
 
     Task<PolicyResult> ApplyAsync(
         PolicyContext ctx,

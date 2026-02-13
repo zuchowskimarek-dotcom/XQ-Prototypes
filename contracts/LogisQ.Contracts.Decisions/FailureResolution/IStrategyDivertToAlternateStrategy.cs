@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.FailureResolution;
 public interface IStrategyDivertToAlternateStrategy : IStrategy
 {
     /// <summary>Stable strategy identifier from XyronQ metadata.</summary>
-    const string StrategyId = "e72c81cb-6aea-4f90-b9e6-79bb2e4baeab";
+    const string StrategyId = "c5c3f9b0-4c3c-48c4-b886-288103b14c3b";
 
     Task<StrategyResult> ExecuteAsync(
         StrategyInput input,

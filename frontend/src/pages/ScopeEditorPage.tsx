@@ -123,8 +123,8 @@ export function ScopeEditorPage() {
                                             }
                                         </td>
                                         <td className="cell-params">
-                                            {rule.systemParameters.length > 0
-                                                ? <span className="param-count">{rule.systemParameters.length} param{rule.systemParameters.length !== 1 ? 's' : ''}</span>
+                                            {rule.ruleParameters.length > 0
+                                                ? <span className="param-count">{rule.ruleParameters.length} param{rule.ruleParameters.length !== 1 ? 's' : ''}</span>
                                                 : <span className="empty-cell">—</span>
                                             }
                                         </td>

@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.StorageSlotting;
 public interface IStrategyNearestEmptyStrategy : IStrategy
 {
     /// <summary>Stable strategy identifier from XyronQ metadata.</summary>
-    const string StrategyId = "4c079fcc-c841-48f5-afd3-12078e265701";
+    const string StrategyId = "af22fc40-4620-4fe2-a56b-7737375e485c";
 
     Task<StrategyResult> ExecuteAsync(
         StrategyInput input,

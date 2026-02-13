@@ -17,8 +17,8 @@ public static class Generated
     public const string DomainVersion = "1.0.0";
 
     /// <summary>SHA-256 hash of the source manifest data.</summary>
-    public const string ManifestHash = "69d695e46227d8ea7729dbbb212022978e1a51c7d3a1d46bd0df084e6d11bfbc";
+    public const string ManifestHash = "19c3c0655d0bdf8c8e5bf7b79e80de742f69c59bd762e57cc08b85138e53fe92";
 
     /// <summary>Timestamp of code generation.</summary>
-    public const string GeneratedAt = "2026-02-09T06:07:08.766Z";
+    public const string GeneratedAt = "2026-02-13T06:44:46.241Z";
 }

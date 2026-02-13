@@ -8,14 +8,14 @@ import crypto from 'crypto';
 
 // ─── Types for the generator input (matches Prisma include shape) ───
 
-interface SystemParameter {
+interface RuleParameter {
     id: string;
     type: string;
     value?: unknown;
 }
 
 interface ParameterMap {
-    [key: string]: SystemParameter;
+    [key: string]: RuleParameter;
 }
 
 interface PolicyDefinitionData {

@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.StorageSlotting;
 public interface IPolicyNoStackHazardousPolicy : IPolicy
 {
     /// <summary>Stable policy identifier from XyronQ metadata.</summary>
-    const string PolicyId = "0ee56191-f8ee-4099-95a1-ddcc48f1ca84";
+    const string PolicyId = "5829b419-82c5-4113-8a4a-01f5afd7f816";
 
     Task<PolicyResult> ApplyAsync(
         PolicyContext ctx,

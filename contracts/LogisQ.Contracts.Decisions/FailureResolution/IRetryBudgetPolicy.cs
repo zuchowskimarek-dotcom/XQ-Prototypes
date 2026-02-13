@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.FailureResolution;
 public interface IRetryBudgetPolicy : IPolicy
 {
     /// <summary>Stable policy identifier from XyronQ metadata.</summary>
-    const string PolicyId = "c3fec976-9b23-40fb-a491-a3a9358457ad";
+    const string PolicyId = "71ec12f5-1e95-46be-b88e-bb24085f7b14";
 
     Task<PolicyResult> ApplyAsync(
         PolicyContext ctx,

@@ -27,7 +27,7 @@ router.get('/:id', async (req, res) => {
             include: {
                 strategy: true,
                 policies: true,
-                systemParameters: true,
+                ruleParameters: true,
             },
         });
 
@@ -58,7 +58,7 @@ router.post('/', validate(CreateRuleSchema), async (req, res) => {
             include: {
                 strategy: true,
                 policies: true,
-                systemParameters: true,
+                ruleParameters: true,
             },
         });
         res.status(201).json(rule);
@@ -83,7 +83,7 @@ router.put('/:id', validate(UpdateRuleSchema), async (req, res) => {
             include: {
                 strategy: true,
                 policies: true,
-                systemParameters: true,
+                ruleParameters: true,
             },
         });
         res.json(rule);
@@ -180,12 +180,12 @@ router.delete('/:id/strategy', async (req, res) => {
     }
 });
 
-// ─── POST /api/rules/:id/parameters — Add SystemParameter ───
+// ─── POST /api/rules/:id/parameters — Add RuleParameter ───
 
 router.post('/:id/parameters', validate(CreateParameterSchema), async (req, res) => {
     try {
         const body = req.body as { paramId: string; type: string; description?: string; value?: string };
-        const param = await prisma.systemParameter.create({
+        const param = await prisma.ruleParameter.create({
             data: { paramId: body.paramId, type: body.type, description: body.description, value: body.value, ruleId: req.params.id as string },
         });
         res.status(201).json(param);
@@ -200,7 +200,7 @@ router.post('/:id/parameters', validate(CreateParameterSchema), async (req, res)
 router.put('/:id/parameters/:paramId', validate(UpdateParameterSchema), async (req, res) => {
     try {
         const body = req.body as { value?: string; type?: string; description?: string };
-        const param = await prisma.systemParameter.update({
+        const param = await prisma.ruleParameter.update({
             where: { id: req.params.paramId as string },
             data: { value: body.value, type: body.type, description: body.description },
         });
@@ -215,7 +215,7 @@ router.put('/:id/parameters/:paramId', validate(UpdateParameterSchema), async (r
 
 router.delete('/:id/parameters/:paramId', async (req, res) => {
     try {
-        await prisma.systemParameter.delete({ where: { id: req.params.paramId } });
+        await prisma.ruleParameter.delete({ where: { id: req.params.paramId } });
         res.status(204).send();
     } catch (e) {
         console.error(e);

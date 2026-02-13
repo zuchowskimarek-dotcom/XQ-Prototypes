@@ -20,7 +20,7 @@ router.get('/:id', async (req, res) => {
                     include: {
                         strategy: true,
                         policies: true,
-                        systemParameters: true,
+                        ruleParameters: true,
                     },
                     orderBy: { specificityScore: 'asc' },
                 },

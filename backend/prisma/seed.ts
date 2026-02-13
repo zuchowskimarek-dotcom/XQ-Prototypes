@@ -8,7 +8,7 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
     // Clear existing data
-    await prisma.systemParameter.deleteMany();
+    await prisma.ruleParameter.deleteMany();
     await prisma.policyDefinition.deleteMany();
     await prisma.strategyDefinition.deleteMany();
     await prisma.policyRule.deleteMany();
@@ -45,7 +45,7 @@ async function main() {
                                             parameters: { enforceABCClass: { type: 'bool', value: true } },
                                         },
                                     },
-                                    systemParameters: {
+                                    ruleParameters: {
                                         create: [
                                             { paramId: 'maxSearchRadius', type: 'int', value: '50', description: 'Maximum search radius in meters' },
                                             { paramId: 'preferGroundLevel', type: 'bool', value: 'true', description: 'Prefer ground-level slots' },
@@ -79,7 +79,7 @@ async function main() {
                                             },
                                         ],
                                     },
-                                    systemParameters: {
+                                    ruleParameters: {
                                         create: [
                                             { paramId: 'weightDistance', type: 'decimal', value: '0.4', description: 'Weight for distance factor' },
                                             { paramId: 'weightFillRate', type: 'decimal', value: '0.35', description: 'Weight for fill rate factor' },
@@ -97,7 +97,7 @@ async function main() {
                                             parameters: {},
                                         },
                                     },
-                                    systemParameters: {
+                                    ruleParameters: {
                                         create: { paramId: 'fifoToleranceDays', type: 'int', value: '3', description: 'Days tolerance for FIFO ordering' },
                                     },
                                 },
@@ -126,7 +126,7 @@ async function main() {
                                             parameters: { hazmatClasses: { type: 'string', value: '1,2,3,4' } },
                                         },
                                     },
-                                    systemParameters: {
+                                    ruleParameters: {
                                         create: { paramId: 'maxStackHeight', type: 'int', value: '3', description: 'Maximum stacking height in units' },
                                     },
                                 },
@@ -151,6 +151,7 @@ async function main() {
                         description: 'Handles transport failures (conveyor jams, AGV errors).',
                         rules: {
                             create: [
+                                // Rule 1: Default — auto-retry with backoff
                                 {
                                     contextFilter: {},
                                     specificityScore: 0,
@@ -158,23 +159,31 @@ async function main() {
                                         create: {
                                             name: 'Strategy.AutoRetry',
                                             description: 'Automatic retry with exponential backoff.',
-                                            parameters: { backoffMultiplier: { type: 'decimal', value: 2.0 } },
+                                            parameters: {
+                                                MaxRetries: { id: 'MaxRetries', type: 'int' },
+                                                BackoffMs: { id: 'BackoffMs', type: 'int' },
+                                                BackoffMultiplier: { id: 'BackoffMultiplier', type: 'decimal' },
+                                            },
                                         },
                                     },
                                     policies: {
                                         create: {
                                             name: 'Policy.MaxRetries',
                                             description: 'Limits the number of automatic retry attempts.',
-                                            parameters: {},
+                                            parameters: {
+                                                MaxRetries: { id: 'MaxRetries', type: 'int' },
+                                            },
                                         },
                                     },
-                                    systemParameters: {
+                                    ruleParameters: {
                                         create: [
-                                            { paramId: 'maxRetries', type: 'int', value: '3', description: 'Maximum retry attempts' },
-                                            { paramId: 'backoffMs', type: 'int', value: '5000', description: 'Initial backoff delay in milliseconds' },
+                                            { paramId: 'MaxRetries', type: 'int', value: '3', description: 'Maximum retry attempts' },
+                                            { paramId: 'BackoffMs', type: 'int', value: '5000', description: 'Initial backoff delay in milliseconds' },
+                                            { paramId: 'BackoffMultiplier', type: 'decimal', value: '2.0', description: 'Backoff multiplier per retry' },
                                         ],
                                     },
                                 },
+                                // Rule 2: CONVEYOR — divert to alternate path
                                 {
                                     contextFilter: { plantArea: 'CONVEYOR' },
                                     specificityScore: 1,
@@ -182,13 +191,16 @@ async function main() {
                                         create: {
                                             name: 'Strategy.DivertToAlternate',
                                             description: 'Diverts to alternate conveyor path on failure.',
-                                            parameters: {},
+                                            parameters: {
+                                                DivertTimeout: { id: 'DivertTimeout', type: 'int' },
+                                            },
                                         },
                                     },
-                                    systemParameters: {
-                                        create: { paramId: 'divertTimeout', type: 'int', value: '10000', description: 'Timeout before divert in ms' },
+                                    ruleParameters: {
+                                        create: { paramId: 'DivertTimeout', type: 'int', value: '10000', description: 'Timeout before divert in ms' },
                                     },
                                 },
+                                // Rule 3: AKL/AUTOMATED — retry then reroute (§5 key rule)
                                 {
                                     contextFilter: { plantArea: 'AKL', storageType: 'AUTOMATED' },
                                     specificityScore: 2,
@@ -196,7 +208,9 @@ async function main() {
                                         create: {
                                             name: 'RetryThenReroute',
                                             description: 'Retries the transport, then reroutes to an alternate path on repeated failure.',
-                                            parameters: {},
+                                            parameters: {
+                                                MaxRetries: { id: 'MaxRetries', type: 'int' },
+                                            },
                                         },
                                     },
                                     policies: {
@@ -205,20 +219,28 @@ async function main() {
                                                 name: 'RetryBudget',
                                                 description: 'Limits retry attempts and delay between retries.',
                                                 parameters: {
-                                                    MaxRetries: { id: 'MaxRetries', type: 'int', value: 2 },
-                                                    RetryDelaySeconds: { id: 'RetryDelaySeconds', type: 'int', value: 10 },
+                                                    MaxRetries: { id: 'MaxRetries', type: 'int' },
+                                                    RetryDelaySeconds: { id: 'RetryDelaySeconds', type: 'int' },
                                                 },
                                             },
                                             {
                                                 name: 'EscalationThreshold',
                                                 description: 'Defines the time window before escalation is triggered.',
                                                 parameters: {
-                                                    EscalateAfterSeconds: { id: 'EscalateAfterSeconds', type: 'int', value: 120 },
+                                                    EscalateAfterSeconds: { id: 'EscalateAfterSec', type: 'int' },
                                                 },
                                             },
                                         ],
                                     },
+                                    ruleParameters: {
+                                        create: [
+                                            { paramId: 'MaxRetries', type: 'int', value: '2', description: 'Maximum retry attempts' },
+                                            { paramId: 'RetryDelaySeconds', type: 'int', value: '10', description: 'Delay between retries in seconds' },
+                                            { paramId: 'EscalateAfterSec', type: 'int', value: '120', description: 'Seconds before escalation' },
+                                        ],
+                                    },
                                 },
+                                // Rule 4: MANUAL — retry then escalate
                                 {
                                     contextFilter: { plantArea: 'MANUAL' },
                                     specificityScore: 1,
@@ -226,7 +248,9 @@ async function main() {
                                         create: {
                                             name: 'RetryThenEscalate',
                                             description: 'Retries the transport, then escalates to manual intervention.',
-                                            parameters: {},
+                                            parameters: {
+                                                MaxRetries: { id: 'MaxRetries', type: 'int' },
+                                            },
                                         },
                                     },
                                     policies: {
@@ -234,10 +258,16 @@ async function main() {
                                             name: 'RetryBudget',
                                             description: 'Limits retry attempts and delay between retries.',
                                             parameters: {
-                                                MaxRetries: { id: 'MaxRetries', type: 'int', value: 5 },
-                                                RetryDelaySeconds: { id: 'RetryDelaySeconds', type: 'int', value: 30 },
+                                                MaxRetries: { id: 'MaxRetries', type: 'int' },
+                                                RetryDelaySeconds: { id: 'RetryDelaySeconds', type: 'int' },
                                             },
                                         },
+                                    },
+                                    ruleParameters: {
+                                        create: [
+                                            { paramId: 'MaxRetries', type: 'int', value: '5', description: 'Maximum retry attempts' },
+                                            { paramId: 'RetryDelaySeconds', type: 'int', value: '30', description: 'Delay between retries in seconds' },
+                                        ],
                                     },
                                 },
                             ],
@@ -297,7 +327,7 @@ async function main() {
                                             parameters: {},
                                         },
                                     },
-                                    systemParameters: {
+                                    ruleParameters: {
                                         create: [
                                             { paramId: 'densityThreshold', type: 'decimal', value: '0.85', description: 'Zone density threshold (0-1)' },
                                             { paramId: 'checkIntervalMin', type: 'int', value: '30', description: 'Check interval in minutes' },
@@ -314,7 +344,7 @@ async function main() {
                                             parameters: { heatmapAlgorithm: { type: 'enum', value: 'exponentialDecay' } },
                                         },
                                     },
-                                    systemParameters: {
+                                    ruleParameters: {
                                         create: { paramId: 'heatmapWindowDays', type: 'int', value: '14', description: 'Heatmap analysis window in days' },
                                     },
                                 },
@@ -350,7 +380,7 @@ async function main() {
                                             parameters: { cleanlinessGrade: { type: 'enum', value: 'A' } },
                                         },
                                     },
-                                    systemParameters: {
+                                    ruleParameters: {
                                         create: { paramId: 'maxSearchDistance', type: 'int', value: '100', description: 'Maximum search distance in meters' },
                                     },
                                 },

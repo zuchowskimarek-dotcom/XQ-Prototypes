@@ -34,7 +34,7 @@ export function toNamespaceSegment(domainName: string): string {
 }
 
 /**
- * Map §8.10 SystemParameter.type to a C# type.
+ * Map §8.10 RuleParameter.type to a C# type.
  */
 export function toCSharpType(paramType: string): string {
     switch (paramType) {

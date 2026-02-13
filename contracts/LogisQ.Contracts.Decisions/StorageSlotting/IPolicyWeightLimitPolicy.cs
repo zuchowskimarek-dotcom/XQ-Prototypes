@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.StorageSlotting;
 public interface IPolicyWeightLimitPolicy : IPolicy
 {
     /// <summary>Stable policy identifier from XyronQ metadata.</summary>
-    const string PolicyId = "de1e3300-8d2e-4105-a113-149f643ea6ad";
+    const string PolicyId = "e029a27b-f07f-4830-b3d0-cc6531d8032c";
 
     Task<PolicyResult> ApplyAsync(
         PolicyContext ctx,

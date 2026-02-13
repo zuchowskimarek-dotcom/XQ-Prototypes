@@ -52,10 +52,10 @@
                         "$ref": "#/$defs/PolicyDefinition"
                     }
                 },
-                "systemParameters": {
+                "ruleParameters": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/$defs/SystemParameter"
+                        "$ref": "#/$defs/RuleParameter"
                     }
                 }
             },
@@ -81,7 +81,7 @@
                 "parameters": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/$defs/SystemParameter"
+                        "$ref": "#/$defs/RuleParameter"
                     }
                 }
             },
@@ -107,13 +107,13 @@
                 "parameters": {
                     "type": "object",
                     "additionalProperties": {
-                        "$ref": "#/$defs/SystemParameter"
+                        "$ref": "#/$defs/RuleParameter"
                     }
                 }
             },
             "additionalProperties": false
         },
-        "SystemParameter": {
+        "RuleParameter": {
             "type": "object",
             "required": [
                 "id",

@@ -29,4 +29,4 @@ public class MyStrategy : IWeightedScoreStrategy
 }
 ```
 
-Generated at: 2026-02-09T06:07:08.767Z
+Generated at: 2026-02-13T06:44:46.244Z

@@ -8,7 +8,7 @@ export const manifestInclude = {
                 include: {
                     strategy: true,
                     policies: true,
-                    systemParameters: true,
+                    ruleParameters: true,
                 },
                 orderBy: { specificityScore: 'asc' as const },
             },
@@ -53,8 +53,8 @@ export function buildManifest(domain: any) {
                 });
             }
 
-            if (rule.systemParameters.length > 0) {
-                policyRule.systemParameters = rule.systemParameters.map((sp: any) => {
+            if (rule.ruleParameters.length > 0) {
+                policyRule.ruleParameters = rule.ruleParameters.map((sp: any) => {
                     const spDef: Record<string, unknown> = { id: sp.paramId, type: sp.type };
                     if (sp.description) spDef.description = sp.description;
                     if (sp.value !== null && sp.value !== undefined) {

@@ -96,7 +96,7 @@ DecisionDomain          → Versioned governance boundary (e.g. "Storage.Slottin
        └─ PolicyRule     → Contextual rule with filter + specificity
             ├─ Strategy  → Decision logic (exactly one per rule)
             ├─ Policy[]  → Constraints/permissions (zero or more)
-            └─ SystemParameter[] → Static config values
+            └─ RuleParameter[] → Static config values
 ```
 
 ### Key Terms
@@ -265,7 +265,7 @@ The manifest structure includes:
           "specificityScore": 1,
           "strategy": { "name": "WeightedScore", "parameters": { ... } },
           "policies": [ ... ],
-          "systemParameters": [ ... ]
+          "ruleParameters": [ ... ]
         }
       ]
     }
@@ -428,7 +428,7 @@ DecisionDomain (1)
  │     │     ├──► PolicyDefinition (*)
  │     │     │     id, name, description, parameters (JSON)
  │     │     │
- │     │     └──► SystemParameter (*)
+ │     │     └──► RuleParameter (*)
  │     │           id, paramId, type, description, value
 ```
 

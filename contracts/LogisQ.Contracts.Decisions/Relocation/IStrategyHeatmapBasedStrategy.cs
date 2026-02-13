@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.Relocation;
 public interface IStrategyHeatmapBasedStrategy : IStrategy
 {
     /// <summary>Stable strategy identifier from XyronQ metadata.</summary>
-    const string StrategyId = "558850d6-a7e8-4a46-bcb2-e2b31d232961";
+    const string StrategyId = "fb5d7819-6ea0-46b7-a7c4-47a0ed83277c";
 
     Task<StrategyResult> ExecuteAsync(
         StrategyInput input,

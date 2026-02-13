@@ -57,7 +57,7 @@ export interface PolicyRule {
     scopeId: string;
     strategy: StrategyDefinition | null;
     policies: PolicyDefinition[];
-    systemParameters: SystemParameter[];
+    ruleParameters: RuleParameter[];
     issues?: string[];
     createdAt: string;
     updatedAt: string;
@@ -81,8 +81,8 @@ export interface StrategyDefinition {
     ruleId: string;
 }
 
-// §8.10 — SystemParameter (rule-level static config values)
-export interface SystemParameter {
+// §8.10 — RuleParameter (rule-level static config values)
+export interface RuleParameter {
     id: string;
     paramId: string;
     type: string;

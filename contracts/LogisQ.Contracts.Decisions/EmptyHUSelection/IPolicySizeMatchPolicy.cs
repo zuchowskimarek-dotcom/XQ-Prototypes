@@ -11,7 +11,7 @@ namespace LogisQ.Contracts.Decisions.EmptyHUSelection;
 public interface IPolicySizeMatchPolicy : IPolicy
 {
     /// <summary>Stable policy identifier from XyronQ metadata.</summary>
-    const string PolicyId = "bb2b0e85-295b-43d1-b578-0e8bd465d489";
+    const string PolicyId = "23eb4783-e6a5-4943-8789-9e9f53115919";
 
     Task<PolicyResult> ApplyAsync(
         PolicyContext ctx,
