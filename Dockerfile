@@ -26,4 +26,5 @@ COPY --from=frontend-build /app/frontend/dist ./frontend/dist
 EXPOSE ${PORT:-3005}
 
 # Start: push schema (creates tables) then run server
-CMD sh -c "cd backend && npx prisma db push && npm start"
+# --url passes Railway's DATABASE_URL directly; --skip-generate avoids re-generating the client
+CMD sh -c "cd backend && npx prisma db push --url \"$DATABASE_URL\" --skip-generate && npm start"
