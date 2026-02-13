@@ -5,10 +5,12 @@ import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import DeleteIcon from '@mui/icons-material/DeleteOutline';
 import CodeIcon from '@mui/icons-material/Code';
 import { useDomainDetail } from '../hooks/useDomainDetail';
 import { saveZipAs } from '../utils/saveZipAs';
+import { ImportRulesModal } from '../components/ImportRulesModal';
 import './DomainOverviewPage.css';
 
 export function DomainOverviewPage() {
@@ -20,6 +22,7 @@ export function DomainOverviewPage() {
     const [showNewForm, setShowNewForm] = useState(false);
     const [newName, setNewName] = useState('');
     const [newDesc, setNewDesc] = useState('');
+    const [showImport, setShowImport] = useState(false);
 
     const handleCreateScope = async () => {
         if (!newName.trim() || !domainId) return;
@@ -56,6 +59,9 @@ export function DomainOverviewPage() {
                     <span className="version-badge">v{domain.version}</span>
                 </div>
                 <div className="page-header-btns">
+                    <button className="btn-secondary" onClick={() => setShowImport(true)}>
+                        <FileUploadIcon fontSize="small" /> Import Rules
+                    </button>
                     <button className="btn-secondary" onClick={() => navigate(`/domains/${domainId}/manifest`)}>
                         <FileDownloadIcon fontSize="small" /> Export Manifest
                     </button>
@@ -130,6 +136,15 @@ export function DomainOverviewPage() {
                     </div>
                 )}
             </div>
+
+            {showImport && domainId && (
+                <ImportRulesModal
+                    domainId={domainId}
+                    domainName={domain.name}
+                    onClose={() => setShowImport(false)}
+                    onSuccess={() => refetch()}
+                />
+            )}
         </div>
     );
 }

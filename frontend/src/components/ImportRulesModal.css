@@ -1,0 +1,173 @@
+/* ─── Import Rules Modal ─── */
+
+.import-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.import-modal {
+    width: min(90vw, 900px);
+    height: min(85vh, 720px);
+    background: var(--surface-card, #1e1e2e);
+    border: 1px solid var(--border-default, #2a2a3a);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.25s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.import-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-default, #2a2a3a);
+}
+
+.import-modal-header h2 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-primary, #e0e0e0);
+}
+
+.import-domain-name {
+    font-size: 0.75rem;
+    color: var(--text-tertiary, #777);
+    margin-top: 2px;
+    display: block;
+}
+
+.import-close-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary, #999);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.15s;
+}
+
+.import-close-btn:hover {
+    background: var(--surface-hover, #2a2a3a);
+    color: var(--text-primary, #e0e0e0);
+}
+
+.import-editor-container {
+    flex: 1;
+    min-height: 0;
+    border-bottom: 1px solid var(--border-default, #2a2a3a);
+}
+
+.import-status {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--border-default, #2a2a3a);
+    min-height: 2.4rem;
+    display: flex;
+    align-items: center;
+}
+
+.import-status pre {
+    margin: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.4;
+}
+
+.import-status.idle {
+    color: var(--text-secondary, #999);
+}
+
+.import-status.error {
+    color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.06);
+}
+
+.import-status.success {
+    color: #51cf66;
+    background: rgba(81, 207, 102, 0.06);
+}
+
+.import-status.validating {
+    color: var(--accent-primary, #7c4dff);
+}
+
+.import-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+}
+
+.import-modal-footer .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 6px;
+    background: var(--accent-primary, #7c4dff);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.import-modal-footer .btn-primary:hover:not(:disabled) {
+    background: var(--accent-light, #9e7cff);
+}
+
+.import-modal-footer .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.import-modal-footer .btn-secondary {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-default, #2a2a3a);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-secondary, #999);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.import-modal-footer .btn-secondary:hover:not(:disabled) {
+    border-color: var(--text-secondary, #999);
+    color: var(--text-primary, #e0e0e0);
+}
